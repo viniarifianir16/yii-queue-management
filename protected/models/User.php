@@ -8,23 +8,22 @@ class User extends CActiveRecord
 
     public function tableName()
     {
-        return 'users'; // Nama tabel di database
+        return 'users';
     }
 
     public function rules()
     {
         return array(
             array('username, email, password', 'required'),
-            array('username', 'length', 'max' => 50),
-            array('email', 'length', 'max' => 100),
-            array('password', 'length', 'max' => 255),
+            array('email', 'email'),
+            array('username', 'unique', 'message' => 'Username already exists.'),
+            array('password', 'length', 'min' => 6, 'max' => 255),
         );
     }
 
     public function beforeSave()
     {
-        if ($this->isNewRecord || $this->isAttributeChanged('password')) {
-            // Hash the password before saving if it's a new record or the password is changed
+        if ($this->isNewRecord) {
             $this->password = CPasswordHelper::hashPassword($this->password);
         }
         return parent::beforeSave();

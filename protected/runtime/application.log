@@ -800,3 +800,13 @@ Stack trace:
 REQUEST_URI=/waithub/yiiapp/index.php/auth/login
 HTTP_REFERER=http://localhost/waithub/yiiapp/index.php/auth/login
 ---
+2024/09/27 06:21:53 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "index". in C:\xampp\htdocs\waithub\waithub-test1\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\htdocs\waithub\waithub-test1\framework\web\CController.php(270): CController->missingAction('')
+#1 C:\xampp\htdocs\waithub\waithub-test1\framework\web\CWebApplication.php(282): CController->run('')
+#2 C:\xampp\htdocs\waithub\waithub-test1\framework\web\CWebApplication.php(141): CWebApplication->runController('auth')
+#3 C:\xampp\htdocs\waithub\waithub-test1\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\waithub\yiiapp\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/waithub/yiiapp/index.php/auth/
+---

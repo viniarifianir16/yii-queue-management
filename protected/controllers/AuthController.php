@@ -7,13 +7,20 @@ class AuthController extends CController
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
+            // Hash the password before saving
+            $model->password = CPasswordHelper::hashPassword($model->password);
+
             if ($model->save()) {
-                $this->redirect(array('auth/login'));
+                Yii::app()->user->setFlash('success', 'Registration successful! You can now login.');
+                $this->redirect(array('login'));
+            } else {
+                Yii::app()->user->setFlash('error', 'Registration failed. Please try again.');
             }
         }
 
         $this->render('register', array('model' => $model));
     }
+
 
     public function actionLogin()
     {

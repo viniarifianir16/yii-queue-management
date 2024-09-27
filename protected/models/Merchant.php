@@ -8,7 +8,7 @@ class Merchant extends CActiveRecord
 
     public function tableName()
     {
-        return 'merchants'; // Nama tabel di database
+        return 'merchants';
     }
 
     public function relations()
