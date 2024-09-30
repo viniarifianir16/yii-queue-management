@@ -5,30 +5,31 @@ class UserIdentity extends CUserIdentity
 
     public function authenticate()
     {
-        // Fetch user by username
-        $user = User::model()->find('LOWER(username)=?', array(strtolower($this->username)));
+        $user = User::model()->findByAttributes(array('username' => $this->username));
 
         if ($user === null) {
-            Yii::log("Username not found: {$this->username}", 'error');
+            // User tidak ditemukan
+            var_dump("User tidak ditemukan");
             $this->errorCode = self::ERROR_USERNAME_INVALID;
+        } elseif (!$user->validatePassword($this->password)) {
+            // Password salah
+            var_dump("Password salah");
+            var_dump($user->password);
+            $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
-            if (!CPasswordHelper::verifyPassword($this->password, $user->password)) {
-                Yii::log("Invalid password for user: {$this->username}", 'error');
-                $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            } else {
-                Yii::log("Login successful for user: {$this->username}", 'info');
-                $this->_id = $user->id;
-                $this->setState('username', $user->username);
-                $this->errorCode = self::ERROR_NONE;
-            }
+            // Login berhasil
+            var_dump("Login berhasil");
+            $this->_id = $user->id;
+            $this->errorCode = self::ERROR_NONE;
         }
+
         return !$this->errorCode;
     }
-
 
     public function getId()
     {
         return $this->_id;
     }
 }
+
 ?>
